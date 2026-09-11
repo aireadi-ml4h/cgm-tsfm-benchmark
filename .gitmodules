@@ -1,0 +1,12 @@
+[submodule "code/external/chronos-forecasting"]
+	path = code/external/chronos-forecasting
+	url = https://github.com/amazon-science/chronos-forecasting.git
+[submodule "code/external/timesfm"]
+	path = code/external/timesfm
+	url = https://github.com/google-research/timesfm.git
+[submodule "code/external/SSM-CGM"]
+	path = code/external/SSM-CGM
+	url = https://github.com/shakson-isaac/SSM-CGM.git
+[submodule "code/external/cgmlsm"]
+	path = code/external/cgmlsm
+	url = https://github.com/JHU-CDHAI/cgmlsm.git

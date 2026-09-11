@@ -1,0 +1,3 @@
+accelerate==1.14.0
+-e git+https://github.com/amazon-science/chronos-forecasting.git@7dc4435706a4454feb79df44ca9f33631f3027bf#egg=chronos_forecasting
+peft==0.20.0

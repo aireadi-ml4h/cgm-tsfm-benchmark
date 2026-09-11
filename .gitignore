@@ -1,0 +1,41 @@
+# This repository is code only. No AI-READI data, derived participant-level
+# data, model checkpoints, or generated results are tracked -- AI-READI is
+# available only under a data use agreement (see README).
+
+# Data and derived data
+*.csv
+*.parquet
+*.arrow
+*.json
+!requirements/*.json
+
+# Model artifacts
+*.ckpt
+*.pt
+*.pth
+*.safetensors
+*.bin
+*.h5
+*.hdf5
+
+# Run outputs
+*_results/
+lightning_logs/
+logs/
+slurm-*.out
+
+# Environments
+venv/
+venv-*/
+.venv/
+
+# Notebooks (outputs can embed participant-level data)
+*.ipynb
+
+# Editor / tool state
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+.claude/
+.DS_Store

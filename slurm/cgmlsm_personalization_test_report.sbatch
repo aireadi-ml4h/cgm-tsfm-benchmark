@@ -1,0 +1,12 @@
+#!/bin/bash
+#SBATCH --job-name=cgmlsm_pers_test_report
+#SBATCH --partition=normal
+#SBATCH --time=01:00:00
+#SBATCH --mem=32GB
+#SBATCH --cpus-per-task=2
+#SBATCH --output=/scratch/users/%u/logs/%x_%j.out
+set -euo pipefail
+REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
+ml load math py-pytorch/2.4.1_py312
+source "$REPO_ROOT/venv-cgmlsm/bin/activate"
+python "$REPO_ROOT/code/analysis/cgmlsm_personalization_test_report.py"
