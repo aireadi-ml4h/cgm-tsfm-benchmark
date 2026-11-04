@@ -21,6 +21,4 @@ ml load math py-pytorch/2.9.1_py314 py-huggingface-hub/0.36.0_py314 py-safetenso
 ml load math py-scikit-learn/1.8.0_py314
 source "$REPO_ROOT/venv-timesfm/bin/activate"
 
-export CGMACROS_DIR=/path/to/cgmacros/1.0.0/extracted/CGMacros
-
 python "$REPO_ROOT/code/meal_detection/train.py"

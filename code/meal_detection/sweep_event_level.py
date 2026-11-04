@@ -13,7 +13,7 @@ import numpy as np
 import torch
 
 sys.path.insert(0, os.path.dirname(__file__))
-from cgmacros_dataset import SEQ_LEN, load_participant_series  # noqa: E402
+from cgmacros_dataset import CGMACROS_DIR, SEQ_LEN, load_participant_series  # noqa: E402
 from generate_meal_probability import load_model  # noqa: E402
 from evaluate_event_level import to_intervals, event_level_recall_precision  # noqa: E402
 
@@ -60,10 +60,9 @@ def main():
     with open(f"{OUTPUT_DIR}/metrics.json") as f:
         val_pids = json.load(f)["val_pids"]
 
-    cgmacros_dir = os.environ.get("CGMACROS_DIR", "/path/to/cgmacros/1.0.0/extracted/CGMacros")
     cached = []
     for pid in val_pids:
-        glucose, labels = load_participant_series(f"{cgmacros_dir}/{pid}/{pid}.csv")
+        glucose, labels = load_participant_series(f"{CGMACROS_DIR}/{pid}/{pid}.csv")
         glucose_arr = glucose.to_numpy()
         truth_binary = (labels.to_numpy() >= TRUTH_THRESHOLD)
         starts, probs, n = cache_window_probs(model, glucose_arr, mean, std, device)

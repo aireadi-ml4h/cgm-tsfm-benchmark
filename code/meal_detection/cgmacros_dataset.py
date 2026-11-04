@@ -73,11 +73,13 @@ import os
 import numpy as np
 import pandas as pd
 
+# Defaults to where slurm/cgmacros_download.sbatch extracts CGMacros 1.0.0.
 CGMACROS_DIR = os.environ.get(
-    "CGMACROS_DIR", "/path/to/cgmacros/1.0.0/extracted/CGMacros"
+    "CGMACROS_DIR",
+    os.path.join(os.environ["AIREADI_SCRATCH"], "cgmacros", "1.0.0", "extracted", "CGMacros"),
 )
 BIO_CSV_PATH = os.environ.get(
-    "CGMACROS_BIO_CSV", "/path/to/cgmacros/1.0.0/extracted/CGMacros/bio.csv"
+    "CGMACROS_BIO_CSV", os.path.join(CGMACROS_DIR, "bio.csv")
 )
 BIN_MINUTES = 5
 SEQ_LEN = 72  # bin count, matches SSM-CGM paper's Appendix A.2 exactly (confirmed, not guessed)

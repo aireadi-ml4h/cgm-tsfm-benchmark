@@ -32,7 +32,7 @@
 set -euo pipefail
 
 REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your cgm-tsfm-benchmark checkout}
-CGMLSM_WORK_ROOT=${CGMLSM_WORK_ROOT:-/path/to/work/aireadi_cgmlsm}
+CGMLSM_WORK_ROOT=${CGMLSM_WORK_ROOT:-$AIREADI_SCRATCH/aireadi_cgmlsm}
 
 # arm_name | checkpoint dir under $CGMLSM_WORK_ROOT | output dir under $REPO_ROOT/cgmlsm_results
 # "-" means leave at cgmlsm_eval.py's own default.

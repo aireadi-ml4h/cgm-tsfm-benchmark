@@ -43,7 +43,7 @@ from nn.cgmlsm.modeling_cgmlsm import CgmLsmLMHeadModel  # noqa: E402
 CGMLSM_INPUT_DIR = os.path.join(REPO_ROOT, "model_input", "cgmlsm")
 PRETRAINED_CHECKPOINT_DIR = os.environ.get(
     "CGMLSM_PRETRAINED_CHECKPOINT_DIR",
-    "/path/to/work/aireadi_cgmlsm/pretrain_glucofmbench_v2/final",
+    os.path.join(os.environ["AIREADI_SCRATCH"], "aireadi_cgmlsm", "pretrain_glucofmbench_v2", "final"),
 )
 OUTPUT_DIR = os.environ.get(
     "CGMLSM_FINETUNE_OUTPUT_DIR_OVERRIDE",
