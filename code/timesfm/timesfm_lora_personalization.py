@@ -30,7 +30,7 @@ sampled from, context_len=144 (this project's standard, matching every
 other model here) and fit_horizon=48 (4h), following the vendored
 finetune_lora.py reference example's own random-window-sampling pattern
 (TimeSeriesRandomWindowDataset). NOT horizon-matched per eval horizon (a
-real simplification relative to Stephanie's own, more refined sweep for
+real simplification relative to a collaborator's own, more refined sweep for
 Chronos-2, which found fit-length matters a lot -- disclosed here, not
 silently adopted as equivalent).
 

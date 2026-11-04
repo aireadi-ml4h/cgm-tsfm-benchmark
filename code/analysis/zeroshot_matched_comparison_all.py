@@ -20,7 +20,7 @@ IDENTICAL statistical machinery -- not a second implementation that could
 subtly diverge from the first. This is the single script covering both
 models; MODEL selects which one via a CLI arg / env var.
 
-Does NOT replace chronos2_loo_matched_comparison.py (Stephanie's original,
+Does NOT replace chronos2_loo_matched_comparison.py (a collaborator's original,
 6-channel-only, Chronos-2-only script) -- that output stays as-is. This
 writes its own, more complete output per model:
   <model>_zeroshot_results/loo/full_matched_comparison.csv   (8 LOO channels

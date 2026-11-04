@@ -6,7 +6,7 @@ purely a longer context, zero weight updates.
 
 WHY THIS EXISTS ALONGSIDE code/chronos2/chronos2_personalization.py, NOT INSTEAD OF IT
 ===============================================================================
-chronos2_personalization.py (Stephanie's, active as of 2026-09-02) answers
+chronos2_personalization.py (a collaborator's, active as of 2026-09-02) answers
 "does adapting Chronos-2's WEIGHTS to one person's history help." This
 answers a different, cheaper question for a different model: "does just
 SHOWING the model more of this person's own data help, with no training at
@@ -15,7 +15,7 @@ all." TimesFM has no LoRA-compatible trainable path with covariate support
 work of any kind existed for it before this file -- this is not a duplicate
 of anything, LoRA or otherwise, for either model.
 
-REUSES, DOES NOT DUPLICATE, Stephanie's eval-set infrastructure
+REUSES, DOES NOT DUPLICATE, a collaborator's eval-set infrastructure
 =================================================================
 model_input/personalization/eval_set_{val,test}.csv (build_personalization_
 eval_set.py) is model-agnostic by its own docstring ("nothing here touches a

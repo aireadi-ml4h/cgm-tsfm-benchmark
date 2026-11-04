@@ -11,7 +11,7 @@ participant is partially seen in training. This reproduces exactly that
 structure on AI-READI: the disjoint `train` population plus, for E's test
 participants specifically, everything strictly before their own causal
 anchor (model_input/personalization/eval_set_test.csv, the SAME anchor
-Stephanie's Chronos-2 LoRA arm and the TimesFM in-context arm both use for
+the Chronos-2 LoRA arm and the TimesFM in-context arm both use for
 their own personalization). The eventual test-time evaluation (a separate
 script) only scores windows at/after the anchor -- the causal boundary is
 enforced by construction (build_ssmcgm_input.build_participant_series's new

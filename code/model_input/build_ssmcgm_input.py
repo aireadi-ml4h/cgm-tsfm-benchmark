@@ -210,7 +210,7 @@ def build_participant_series(person_id, cov, cutoff=None, time_range=None):
     # cutoff (added 2026-09-03, for the SSM-CGM paper-style personalization
     # experiment): keeps only rows strictly before a real UTC timestamp --
     # each held-out test participant's own causal anchor (model_input/
-    # personalization/eval_set_test.csv), the same anchor Stephanie's LoRA
+    # personalization/eval_set_test.csv), the same anchor the Chronos-2 LoRA
     # arm and the TimesFM in-context arm both use. Applied here, BEFORE the
     # gap/series_id derivation below, so a truncated participant's kept rows
     # get correctly re-segmented (the tail past the cutoff simply doesn't

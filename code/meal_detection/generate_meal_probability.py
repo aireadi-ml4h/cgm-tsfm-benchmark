@@ -12,7 +12,7 @@ builder (build_ssmcgm_input.py, export_zeroshot_windows.py), most of which
 run in the project's lightweight CPU-only venv ($AIREADI_ROOT/venv, plain
 pandas/numpy, no torch) -- loading a PyTorch checkpoint on every call, or
 adding a torch dependency to every consumer's environment, would be both
-slow and invasive to scripts this project doesn't own alone (Stephanie's).
+slow and invasive to scripts this project doesn't own alone (a collaborator's).
 Precomputing once here and having build_participant_grid.py just read the
 resulting plain CSV (added in a follow-up edit) keeps every downstream
 consumer's dependency footprint unchanged.
