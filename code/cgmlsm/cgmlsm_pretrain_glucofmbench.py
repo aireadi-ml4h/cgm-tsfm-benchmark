@@ -40,7 +40,7 @@ GLUCOFMBENCH_INPUT_DIR = os.environ.get(
 )
 OUTPUT_DIR = os.environ.get(
     "CGMLSM_PRETRAIN_OUTPUT_DIR_OVERRIDE",
-    os.path.join(os.environ["SCRATCH"], "aireadi_cgmlsm", "pretrain_glucofmbench_v2"),
+    os.path.join(os.environ["AIREADI_SCRATCH"], "aireadi_cgmlsm", "pretrain_glucofmbench_v2"),
 )
 
 MAX_STEPS = int(os.environ.get("CGMLSM_MAX_STEPS", "-1"))

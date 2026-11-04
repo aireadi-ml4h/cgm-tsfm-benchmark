@@ -6,7 +6,7 @@
 #SBATCH --mem=96GB
 #SBATCH --cpus-per-task=8
 #SBATCH -G 1
-#SBATCH --output=/scratch/users/%u/logs/%x_%j.out
+#SBATCH --output=logs/%x_%j.out
 
 # Single GPU from the start (ssmcgm_train_real.py's real history: two
 # distinct DDP failures before settling on single-GPU for reliability).

@@ -9,7 +9,7 @@ convention, same "one adaptation per person, base model reused untouched for
 the next person" isolation guarantee, so the arms are directly comparable.
 
 BASE CHECKPOINT: the T1D-excluded GlucoFM-Bench pretrain fine-tuned on AI-READI
-for 2 EPOCHS AT lr=1e-2 ($SCRATCH/aireadi_cgmlsm/finetune_sweep4_ep2_lr1e-2).
+for 2 EPOCHS AT lr=1e-2 ($AIREADI_SCRATCH/aireadi_cgmlsm/finetune_sweep4_ep2_lr1e-2).
 Always pass it explicitly via CGMLSM_PERS_BASE_CKPT; the module default is only
 a fallback.
 
@@ -139,7 +139,7 @@ BIN_MINUTES = 5
 
 BASE_CKPT = os.environ.get(
     "CGMLSM_PERS_BASE_CKPT",
-    os.path.join(os.environ["SCRATCH"], "aireadi_cgmlsm", "finetune_sweep2_ep1_lr5e-6", "final"),
+    os.path.join(os.environ["AIREADI_SCRATCH"], "aireadi_cgmlsm", "finetune_sweep2_ep1_lr5e-6", "final"),
 )
 SPLIT = os.environ.get("CGMLSM_PERS_SPLIT", "test")
 EVAL_SET_PATH = os.environ.get(

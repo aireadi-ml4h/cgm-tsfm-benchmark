@@ -13,7 +13,7 @@
 #SBATCH --cpus-per-task=4
 #SBATCH -G 1
 #SBATCH --array=0-7
-#SBATCH --output=/scratch/users/%u/logs/%x_%A_%a.out
+#SBATCH --output=logs/%x_%A_%a.out
 
 # PHASE 1, TEST SPLIT: the proposal's second research question.
 # NOT SUBMITTED WITHOUT SIGN-OFF -- this is the actual experiment, and the
@@ -77,7 +77,7 @@
 set -euo pipefail
 REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
 PERS_BAR="${PERS_BAR:-7}"
-export HF_HOME=$SCRATCH/hf_cache
+export HF_HOME=$AIREADI_SCRATCH/hf_cache
 mkdir -p "$HF_HOME"
 
 ml load math py-pytorch/2.9.1_py314 py-transformers/4.57.3_py314 py-einops/0.8.1_py314 py-pandas/2.3.3_py314 py-pyarrow/22.0.0_py314

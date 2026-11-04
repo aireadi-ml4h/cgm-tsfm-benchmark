@@ -6,7 +6,7 @@
 #SBATCH --mem=32GB
 #SBATCH --cpus-per-task=4
 #SBATCH -G 1
-#SBATCH --output=/scratch/users/%u/logs/%x_%j.out
+#SBATCH --output=logs/%x_%j.out
 
 # IS THE CHOSEN BASE RECIPE STABLE, OR IS IT LUCK NEXT TO A CLIFF?
 #
@@ -34,7 +34,7 @@
 #     than a smaller but solid gain.
 set -euo pipefail
 REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
-SCRATCH_BASE="$SCRATCH/aireadi_cgmlsm"
+SCRATCH_BASE="$AIREADI_SCRATCH/aireadi_cgmlsm"
 PRETRAINED="$SCRATCH_BASE/pretrain_glucofmbench_no_t1d_v1/final"
 VAL_WINDOWS="$REPO_ROOT/model_input/cgmlsm/cgmlsm_val_windows.csv"
 RESULTS_ROOT="$REPO_ROOT/cgmlsm_results/finetune_seed_stability"

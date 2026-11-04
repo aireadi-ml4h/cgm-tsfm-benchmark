@@ -4,7 +4,7 @@
 #SBATCH --time=00:20:00
 #SBATCH --mem=16GB
 #SBATCH --cpus-per-task=2
-#SBATCH --output=/scratch/users/%u/logs/%x_%j.out
+#SBATCH --output=logs/%x_%j.out
 
 # CPU-only: reads the per-bin predictions CSVs both arms already wrote, runs no
 # model, so no GPU and --partition can include `normal`.

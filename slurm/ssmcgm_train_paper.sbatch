@@ -6,7 +6,7 @@
 #SBATCH --mem=200GB
 #SBATCH --cpus-per-task=8
 #SBATCH -G 1
-#SBATCH --output=/scratch/users/%u/logs/%x_%j.out
+#SBATCH --output=logs/%x_%j.out
 
 # Fresh training run on the population-wide "paper" mode split
 # (model_input/ssmcgm/ssmcgm_{train,val,test}_paper.csv -- literal replication

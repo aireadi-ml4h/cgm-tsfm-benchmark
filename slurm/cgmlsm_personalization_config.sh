@@ -81,7 +81,7 @@
 set -euo pipefail
 
 # --- shared by every arm -------------------------------------------------
-export CGMLSM_PERS_BASE_CKPT="$SCRATCH/aireadi_cgmlsm/finetune_sweep4_ep2_lr1e-2/final"
+export CGMLSM_PERS_BASE_CKPT="$AIREADI_SCRATCH/aireadi_cgmlsm/finetune_sweep4_ep2_lr1e-2/final"
 export CGMLSM_PERS_BATCH_SIZE=8
 export CGMLSM_PERS_FIT_STRIDE=12
 export CGMLSM_PERS_SEED=42

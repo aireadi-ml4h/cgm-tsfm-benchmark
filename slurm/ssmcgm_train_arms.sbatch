@@ -36,7 +36,7 @@
 #SBATCH --cpus-per-task=4
 #SBATCH -G 1
 #SBATCH --array=0-4
-#SBATCH --output=/scratch/users/%u/logs/%x_%A_%a.out
+#SBATCH --output=logs/%x_%A_%a.out
 set -euo pipefail
 
 REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}

@@ -4,7 +4,7 @@
 #SBATCH --time=01:00:00
 #SBATCH --mem=24GB
 #SBATCH --cpus-per-task=2
-#SBATCH --output=/scratch/users/%u/logs/%x_%j.out
+#SBATCH --output=logs/%x_%j.out
 set -euo pipefail
 REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
 ml load math py-pytorch/2.4.1_py312

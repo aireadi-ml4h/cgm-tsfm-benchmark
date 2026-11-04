@@ -5,7 +5,7 @@
 #SBATCH --time=01:00:00
 #SBATCH --mem=32GB
 #SBATCH --cpus-per-task=8
-#SBATCH --output=/scratch/users/%u/logs/%x_%j.out
+#SBATCH --output=logs/%x_%j.out
 #
 # FIX 2026-09-09: the previous version did `pip install lightgbm` inside
 # venv-chronos. There is no lightgbm wheel for the py314 stack, so pip fell

@@ -81,7 +81,7 @@ from cgmlsm_vocab import CGM_IDX2TKN, CGM_TKN2IDX, CGM_PAD_IDX  # noqa: E402
 from windows import CONTEXT_BINS, HORIZONS_BINS  # noqa: E402
 
 CGMLSM_INPUT_DIR = os.path.join(REPO_ROOT, "model_input", "cgmlsm")
-OUTPUT_DIR = os.path.join(os.environ["SCRATCH"], "aireadi_cgmlsm", "train_v1")
+OUTPUT_DIR = os.path.join(os.environ["AIREADI_SCRATCH"], "aireadi_cgmlsm", "train_v1")
 
 # Longest horizon actually evaluated (2h = 24 bins, cgmlsm_eval.py's
 # EVAL_HORIZONS) -- see build_model()'s n_positions comment for why this

@@ -47,7 +47,7 @@ PRETRAINED_CHECKPOINT_DIR = os.environ.get(
 )
 OUTPUT_DIR = os.environ.get(
     "CGMLSM_FINETUNE_OUTPUT_DIR_OVERRIDE",
-    os.path.join(os.environ["SCRATCH"], "aireadi_cgmlsm", "finetune_glucofmbench_to_aireadi_v1"),
+    os.path.join(os.environ["AIREADI_SCRATCH"], "aireadi_cgmlsm", "finetune_glucofmbench_to_aireadi_v1"),
 )
 
 MAX_STEPS = int(os.environ.get("CGMLSM_MAX_STEPS", "-1"))

@@ -24,7 +24,7 @@
 # under 16GB -- this reads prediction CSVs per arm, not the model.
 #SBATCH --cpus-per-task=2
 #SBATCH --mem=16GB
-#SBATCH --output=/scratch/users/%u/logs/%x_%A.out
+#SBATCH --output=logs/%x_%A.out
 
 # TEST-SPLIT REPORTING DRIVER.
 #

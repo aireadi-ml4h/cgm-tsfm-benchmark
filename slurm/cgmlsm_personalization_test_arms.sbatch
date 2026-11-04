@@ -6,7 +6,7 @@
 #SBATCH --mem=32GB
 #SBATCH --cpus-per-task=4
 #SBATCH -G 1
-#SBATCH --output=/scratch/users/%u/logs/%x_%j.out
+#SBATCH --output=logs/%x_%j.out
 
 # THE TEST-SPLIT PERSONALIZATION RUN. All 7 arms, one job, one shared config.
 #

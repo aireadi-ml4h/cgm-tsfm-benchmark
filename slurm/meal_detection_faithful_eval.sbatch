@@ -6,7 +6,7 @@
 #SBATCH --mem=32GB
 #SBATCH --cpus-per-task=4
 #SBATCH -G 1
-#SBATCH --output=/scratch/users/%u/logs/%x_%j.out
+#SBATCH --output=logs/%x_%j.out
 
 # Re-runs ONLY the event-level evaluation of the source-protocol arm trained
 # by slurm/meal_detection_faithful_arm.sbatch (job 42433651). That job's
@@ -20,7 +20,7 @@ ml load math py-pytorch/2.9.1_py314 py-huggingface-hub/0.36.0_py314 py-safetenso
 ml load math py-scikit-learn/1.8.0_py314
 source "$REPO_ROOT/venv-timesfm/bin/activate"
 
-BIO=$(find "$SCRATCH/cgmacros/1.0.0/extracted" -maxdepth 3 -name bio.csv | head -1)
+BIO=$(find "$AIREADI_SCRATCH/cgmacros/1.0.0/extracted" -maxdepth 3 -name bio.csv | head -1)
 export CGMACROS_DIR="$(dirname "$BIO")"
 export CGMACROS_BIO_CSV="$BIO"
 export MEAL_DETECTION_OUTPUT_DIR="$REPO_ROOT/model_input/meal_detection/faithful_arm"

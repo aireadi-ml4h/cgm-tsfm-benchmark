@@ -5,7 +5,7 @@
 #SBATCH --time=00:30:00
 #SBATCH --mem=32GB
 #SBATCH --cpus-per-task=2
-#SBATCH --output=/scratch/users/%u/logs/%x_%j.out
+#SBATCH --output=logs/%x_%j.out
 # Matched LSTM/Mamba vs TimesFM AND Chronos-2. The existing per-model
 # significance.csv files only compare against Chronos-2, the weaker of the two
 # foundation models, so the headline claim was not established. CPU-only.

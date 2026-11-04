@@ -6,7 +6,7 @@
 #SBATCH --mem=32GB
 #SBATCH --cpus-per-task=4
 #SBATCH -G 1
-#SBATCH --output=/scratch/users/%u/logs/%x_%j.out
+#SBATCH --output=logs/%x_%j.out
 
 # SOURCE-PROTOCOL REPRODUCTION ARM -- DIAGNOSTIC ONLY.
 #
@@ -50,7 +50,7 @@ source "$REPO_ROOT/venv-timesfm/bin/activate"
 # used, /path/to/work/..., is mode 0700 and unreadable here.
 # Auto-detect the extracted root: the zip's top-level folder name is not
 # guaranteed, so locate the directory that actually contains bio.csv.
-CGM_ROOT="$SCRATCH/cgmacros/1.0.0/extracted"
+CGM_ROOT="$AIREADI_SCRATCH/cgmacros/1.0.0/extracted"
 BIO=$(find "$CGM_ROOT" -maxdepth 3 -name bio.csv | head -1)
 test -n "$BIO" || { echo "bio.csv not found under $CGM_ROOT -- did cgmacros_download.sbatch run?" >&2; exit 1; }
 export CGMACROS_DIR="$(dirname "$BIO")"

@@ -33,10 +33,15 @@ copy of both datasets under their respective terms.
 These scripts were written for a Slurm HPC cluster with an Lmod module system.
 Absolute paths appear as placeholders: point `AIREADI_ROOT` at your checkout for
 the Slurm scripts, and the `REPO_ROOT` constant at the top of each Python file.
+Point `AIREADI_SCRATCH` at a directory with room for large files: the Hugging
+Face cache, CGM-LSM checkpoints and the CGMacros download. Submit jobs from the
+repository root; Slurm writes job logs to `logs/`, which must exist first.
 
 ```bash
 export AIREADI_ROOT=/your/path/to/this/checkout
+export AIREADI_SCRATCH=/your/path/for/large/files
 git submodule update --init --recursive
+mkdir -p logs
 sbatch slurm/chronos2_zeroshot_arms.sbatch
 ```
 

@@ -4,7 +4,7 @@
 #SBATCH --time=01:00:00
 #SBATCH --mem=8GB
 #SBATCH --cpus-per-task=2
-#SBATCH --output=/scratch/users/%u/logs/%x_%j.out
+#SBATCH --output=logs/%x_%j.out
 
 # Re-downloads CGMacros (PhysioNet DOI 10.13026/3z8q-x658, open access, no
 # credentialing) into THIS user's own scratch. The existing copy the meal
@@ -12,7 +12,7 @@
 # unreadable here) and is subject to the 90-day scratch purge, so the
 # reproduction arm cannot depend on it. CPU-only; not run on the login node.
 set -euo pipefail
-DEST="$SCRATCH/cgmacros/1.0.0"
+DEST="$AIREADI_SCRATCH/cgmacros/1.0.0"
 mkdir -p "$DEST"
 
 ml load system aws-cli

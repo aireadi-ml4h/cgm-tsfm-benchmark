@@ -6,11 +6,11 @@
 #SBATCH --mem=32GB
 #SBATCH --cpus-per-task=4
 #SBATCH -G 1
-#SBATCH --output=/scratch/users/%u/logs/%x_%j.out
+#SBATCH --output=logs/%x_%j.out
 
 set -euo pipefail
 REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
-export HF_HOME=$SCRATCH/hf_cache
+export HF_HOME=$AIREADI_SCRATCH/hf_cache
 mkdir -p "$HF_HOME"
 
 # NOT loading py-huggingface-hub or py-safetensors modules -- see

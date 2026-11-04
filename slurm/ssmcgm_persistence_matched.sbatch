@@ -5,7 +5,7 @@
 #SBATCH --time=02:00:00
 #SBATCH --mem=64GB
 #SBATCH --cpus-per-task=4
-#SBATCH --output=/scratch/users/%u/logs/%x_%j.out
+#SBATCH --output=logs/%x_%j.out
 #
 # Persistence baseline on SSM-CGM's OWN windows -- the matched-window check
 # T9 flags as the most important open item.

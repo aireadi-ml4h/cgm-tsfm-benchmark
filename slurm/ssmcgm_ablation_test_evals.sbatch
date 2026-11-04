@@ -7,7 +7,7 @@
 #SBATCH --cpus-per-task=4
 #SBATCH -G 1
 #SBATCH --array=0-2
-#SBATCH --output=/scratch/users/%u/logs/%x_%A_%a.out
+#SBATCH --output=logs/%x_%A_%a.out
 #
 # Test-set MAE for the three SSM-CGM covariate-ablation cells that have none.
 # Closes AUDIT.md's "test MAE for only one of four cells" warning, so the

@@ -27,7 +27,7 @@
 #SBATCH --cpus-per-task=4
 #SBATCH -G 1
 #SBATCH --array=0-12
-#SBATCH --output=/scratch/users/%u/logs/%x_%A_%a.out
+#SBATCH --output=logs/%x_%A_%a.out
 set -euo pipefail
 
 # arm_name | extra env (space-separated KEY=VAL) | results subdir | eval-set subdir
@@ -64,7 +64,7 @@ ARMS=(
 IFS='|' read -r ARM_NAME ARM_ENV RESULTS_SUBDIR EVAL_SUBDIR <<< "${ARMS[${SLURM_ARRAY_TASK_ID:-0}]}"
 
 REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
-export HF_HOME=$SCRATCH/hf_cache
+export HF_HOME=$AIREADI_SCRATCH/hf_cache
 mkdir -p "$HF_HOME"
 
 if [ "$ARM_ENV" != "-" ]; then

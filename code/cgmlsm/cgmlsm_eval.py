@@ -1,5 +1,5 @@
 """Evaluates the trained CGM-LSM checkpoint (code/cgmlsm/cgmlsm_train.py, Slurm job
-41045299, $SCRATCH/aireadi_cgmlsm/train_v1/final) over
+41045299, $AIREADI_SCRATCH/aireadi_cgmlsm/train_v1/final) over
 model_input/cgmlsm/cgmlsm_test.csv, autoregressively forecasting each
 window's horizon from its 144-bin (12h) context via model.generate() and
 scoring MAE/RMSE against the real cgm_glucose ground truth -- the trained-
@@ -54,7 +54,7 @@ TEST_PATH = os.environ.get(
 )
 CHECKPOINT_DIR = os.environ.get(
     "CGMLSM_CHECKPOINT_DIR",
-    os.path.join(os.environ["SCRATCH"], "aireadi_cgmlsm", "train_v1", "final"),
+    os.path.join(os.environ["AIREADI_SCRATCH"], "aireadi_cgmlsm", "train_v1", "final"),
 )
 OUTPUT_DIR = os.environ.get("CGMLSM_EVAL_OUTPUT_DIR", os.path.join(REPO_ROOT, "cgmlsm_results", "from_scratch"))
 CHUNK_SIZE = 500  # windows per generate() batch / per checkpoint, same convention as chronos2_zeroshot_eval.py

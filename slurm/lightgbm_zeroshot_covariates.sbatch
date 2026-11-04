@@ -5,7 +5,7 @@
 #SBATCH --time=02:00:00
 #SBATCH --mem=32GB
 #SBATCH --cpus-per-task=8
-#SBATCH --output=/scratch/users/%u/logs/%x_%j.out
+#SBATCH --output=logs/%x_%j.out
 
 set -euo pipefail
 REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}

@@ -6,7 +6,7 @@
 #SBATCH --mem=32GB
 #SBATCH --cpus-per-task=4
 #SBATCH -G 1
-#SBATCH --output=/scratch/users/%u/logs/%x_%j.out
+#SBATCH --output=logs/%x_%j.out
 
 # Real full run on the FIXED script (2026-09-07 gap-confound bug fixed --
 # see code/CHRONOS2_INCONTEXT_PERSONALIZATION.md). Mirrors
@@ -16,7 +16,7 @@
 # the script's internal context-building logic was wrong.
 set -euo pipefail
 REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
-export HF_HOME=$SCRATCH/hf_cache
+export HF_HOME=$AIREADI_SCRATCH/hf_cache
 mkdir -p "$HF_HOME"
 
 export CHRONOS2_ICL_SPLIT=test

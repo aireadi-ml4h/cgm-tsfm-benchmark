@@ -30,7 +30,7 @@
 #SBATCH --cpus-per-task=4
 #SBATCH -G 1
 #SBATCH --array=0-11
-#SBATCH --output=/scratch/users/%u/logs/%x_%A_%a.out
+#SBATCH --output=logs/%x_%A_%a.out
 set -euo pipefail
 
 # arm_name | channels to ablate | extra CHRONOS2_INCLUDE_* flag (may be empty)
@@ -52,7 +52,7 @@ ARMS=(
 IFS='|' read -r ARM_NAME ABLATE EXTRA_FLAG <<< "${ARMS[${SLURM_ARRAY_TASK_ID:-0}]}"
 
 REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
-export HF_HOME=$SCRATCH/hf_cache
+export HF_HOME=$AIREADI_SCRATCH/hf_cache
 mkdir -p "$HF_HOME"
 
 export CHRONOS2_ONLY_WITH_COVARIATES=1

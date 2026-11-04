@@ -18,8 +18,8 @@
 #SBATCH --mem=16GB
 #SBATCH --cpus-per-task=1
 #SBATCH --array=0-1
-#SBATCH --output=/scratch/users/%u/%x_%A_%a.out
-#SBATCH --error=/scratch/users/%u/%x_%A_%a.err
+#SBATCH --output=logs/%x_%A_%a.out
+#SBATCH --error=logs/%x_%A_%a.err
 
 : "${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}"
 
@@ -35,7 +35,8 @@ echo "arm=$ARM_NAME analysis=$ANALYSIS_SUBDIR out=$OUT_SUBDIR"
 
 [ -f /etc/profile.d/modules.sh ] && source /etc/profile.d/modules.sh
 ml devel python/3.12.1
-export LD_LIBRARY_PATH=/share/software/user/open/python/3.12.1/lib:$LD_LIBRARY_PATH
+# The venv's python3 needs the loaded Python's libpython on the library path.
+export LD_LIBRARY_PATH=$(dirname "$(dirname "$(command -v python3)")")/lib:$LD_LIBRARY_PATH
 VENV=${AIREADI_ROOT}/venv/bin/python3
 
 "$VENV" ${AIREADI_ROOT}/code/model_input/export_zeroshot_windows.py

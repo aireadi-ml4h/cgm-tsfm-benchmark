@@ -372,7 +372,7 @@ if HISTORY_DAYS > HISTORY_BAR_DAYS:
 # 780 copies of a Chronos-2-sized model is not something to keep, and nothing
 # downstream reads them: each adapted model is used once, in-process, for its
 # own participant's windows.
-FIT_SCRATCH_DIR = os.environ.get("L_SCRATCH", "/tmp") + "/chronos2_pers_fit"
+FIT_SCRATCH_DIR = os.environ.get("TMPDIR", "/tmp") + "/chronos2_pers_fit"
 
 
 def load_eval_set():

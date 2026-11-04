@@ -6,7 +6,7 @@
 #SBATCH --mem=32GB
 #SBATCH --cpus-per-task=4
 #SBATCH -G 1
-#SBATCH --output=/scratch/users/%u/logs/%x_%j.out
+#SBATCH --output=logs/%x_%j.out
 
 # Scores the NEW frozen base (2 epochs, lr=1e-2, from the T1D-excluded
 # GlucoFM-Bench pretrain) on the TEST windows -- the reportable number, to sit
@@ -24,7 +24,7 @@
 # with seed 42 identified as the optimistic end.
 set -euo pipefail
 REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
-SCRATCH_BASE="$SCRATCH/aireadi_cgmlsm"
+SCRATCH_BASE="$AIREADI_SCRATCH/aireadi_cgmlsm"
 RESULTS_ROOT="$REPO_ROOT/cgmlsm_results/newbase_test"
 
 ml load math py-pytorch/2.4.1_py312
