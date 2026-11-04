@@ -27,7 +27,7 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-REPO = "/path/to/aireadi-collab"
+REPO = os.environ["AIREADI_ROOT"]
 OUT_DIR = f"{REPO}/dl_vs_fm_results"
 os.makedirs(OUT_DIR, exist_ok=True)
 

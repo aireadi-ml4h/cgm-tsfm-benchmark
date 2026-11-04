@@ -61,8 +61,9 @@ import pandas as pd
 sys.path.insert(0, os.path.dirname(__file__))
 from build_participant_grid import build_grid, load_participants_covariates  # noqa: E402
 
-ANALYSIS_DIR = "/path/to/aireadi-collab/analysis_dataframe"
-OUTPUT_DIR = "/path/to/aireadi-collab/model_input/ssmcgm"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
+ANALYSIS_DIR = f"{REPO_ROOT}/analysis_dataframe"
+OUTPUT_DIR = f"{REPO_ROOT}/model_input/ssmcgm"
 
 STATIC_CATEGORICALS = ["participant_id", "clinical_site", "study_group"]
 STATIC_REALS = ["age"]

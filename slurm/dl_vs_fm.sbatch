@@ -10,7 +10,7 @@
 # significance.csv files only compare against Chronos-2, the weaker of the two
 # foundation models, so the headline claim was not established. CPU-only.
 set -euo pipefail
-REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
+REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your cgm-tsfm-benchmark checkout}
 ml load devel py-numpy/1.26.3_py312 py-pandas/2.2.1_py312
 ml load math py-scipy/1.12.0_py312
 cd "$REPO_ROOT"

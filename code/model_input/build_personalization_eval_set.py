@@ -126,7 +126,7 @@ for _d in ("analysis", "baselines", "cgmlsm", "chronos2", "meal_detection", "mod
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from chronos2_matched_comparison import load_window_keys  # noqa: E402
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 GLUCOSE_DIR = f"{REPO_ROOT}/final_cleaned_data/glucose"
 WINDOW_INDEX_PATH = f"{REPO_ROOT}/model_input/window_index.csv"
 OUTPUT_DIR = f"{REPO_ROOT}/model_input/personalization"

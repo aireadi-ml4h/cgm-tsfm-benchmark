@@ -23,7 +23,7 @@
 # Run this before building the covariate fine-tuning path, not after.
 
 set -euo pipefail
-REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
+REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your cgm-tsfm-benchmark checkout}
 ml load math py-pandas/2.3.3_py314 py-scipy/1.16.3_py314
 
 cd "$REPO_ROOT/code"

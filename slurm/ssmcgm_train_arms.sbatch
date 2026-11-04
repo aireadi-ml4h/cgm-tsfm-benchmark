@@ -39,7 +39,7 @@
 #SBATCH --output=logs/%x_%A_%a.out
 set -euo pipefail
 
-REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
+REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your cgm-tsfm-benchmark checkout}
 
 # arm_name | split csv stem | output subdir | extra env (space-separated KEY=VAL)
 # "-" means leave at ssmcgm_train_real.py's own default.

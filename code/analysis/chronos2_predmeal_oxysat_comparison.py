@@ -48,7 +48,7 @@ import pandas as pd
 sys.path.insert(0, os.path.dirname(__file__))
 from chronos2_matched_comparison import compare_arms  # noqa: E402
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 BASELINE_DIR = f"{REPO_ROOT}/chronos2_zeroshot_results/full/imputed"
 PREDMEAL_DIR = f"{REPO_ROOT}/chronos2_zeroshot_results/full/with_predmeal_prob"
 DROP_OXYSAT_DIR = f"{REPO_ROOT}/chronos2_zeroshot_results/loo/drop_oxygen_saturation"

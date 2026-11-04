@@ -97,7 +97,7 @@ import numpy as np
 import pandas as pd
 import timesfm
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 EVAL_DIR = os.environ.get("TIMESFM_EVAL_DIR_OVERRIDE", f"{REPO_ROOT}/model_input/zeroshot_eval")
 OUTPUT_DIR = os.environ.get("TIMESFM_RESULTS_DIR_OVERRIDE", f"{REPO_ROOT}/timesfm_zeroshot_results/full/imputed")
 CHUNK_SIZE = 500  # windows per forecast()/forecast_with_covariates() call / per checkpoint

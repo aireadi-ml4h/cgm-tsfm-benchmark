@@ -50,9 +50,10 @@ from coverage import is_window_eligible  # noqa: E402
 from windows import CONTEXT_BINS, HORIZONS_BINS  # noqa: E402
 from cgmlsm_vocab import tokenize_glucose, tokenize_tod  # noqa: E402
 
-ANALYSIS_DIR = "/path/to/aireadi-collab/analysis_dataframe"
-WINDOW_INDEX_PATH = "/path/to/aireadi-collab/model_input/window_index.csv"
-OUTPUT_DIR = "/path/to/aireadi-collab/model_input/cgmlsm"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
+ANALYSIS_DIR = f"{REPO_ROOT}/analysis_dataframe"
+WINDOW_INDEX_PATH = f"{REPO_ROOT}/model_input/window_index.csv"
+OUTPUT_DIR = f"{REPO_ROOT}/model_input/cgmlsm"
 
 # 3h/4h is a Chronos-2-only exploratory extension (CHRONOS2_EVAL.md), not
 # built for CGM-LSM, matching SSM-CGM/TimesFM's own scope.

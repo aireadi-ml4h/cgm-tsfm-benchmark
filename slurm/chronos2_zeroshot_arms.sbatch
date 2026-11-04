@@ -63,7 +63,7 @@ ARMS=(
 
 IFS='|' read -r ARM_NAME ARM_ENV RESULTS_SUBDIR EVAL_SUBDIR <<< "${ARMS[${SLURM_ARRAY_TASK_ID:-0}]}"
 
-REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
+REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your cgm-tsfm-benchmark checkout}
 export HF_HOME=$AIREADI_SCRATCH/hf_cache
 mkdir -p "$HF_HOME"
 

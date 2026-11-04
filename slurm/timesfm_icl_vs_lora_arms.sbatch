@@ -20,7 +20,7 @@
 #SBATCH --array=0-1
 #SBATCH --output=logs/%x_%A_%a.out
 set -euo pipefail
-REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
+REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your cgm-tsfm-benchmark checkout}
 
 ARMS=("untuned|-" "tuned|TIMESFM_LORA_SUFFIX=_tuned")
 IFS='|' read -r ARM_NAME ARM_ENV <<< "${ARMS[${SLURM_ARRAY_TASK_ID:-0}]}"

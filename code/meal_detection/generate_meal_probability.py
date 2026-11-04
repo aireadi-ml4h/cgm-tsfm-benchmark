@@ -9,7 +9,7 @@ file convention.
 This is a SEPARATE precompute step, not something build_participant_grid.py
 calls inline: build_grid() is invoked in a tight loop by every model-input
 builder (build_ssmcgm_input.py, export_zeroshot_windows.py), most of which
-run in the project's lightweight CPU-only venv (aireadi-collab/venv, plain
+run in the project's lightweight CPU-only venv ($AIREADI_ROOT/venv, plain
 pandas/numpy, no torch) -- loading a PyTorch checkpoint on every call, or
 adding a torch dependency to every consumer's environment, would be both
 slow and invasive to scripts this project doesn't own alone (Stephanie's).
@@ -58,7 +58,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "model_input"))
 from model import MealDetector  # noqa: E402
 from build_participant_grid import build_grid, load_participants_covariates  # noqa: E402
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 ANALYSIS_DIR = os.environ.get("ANALYSIS_DIR_OVERRIDE", f"{REPO_ROOT}/analysis_dataframe")
 # MEAL_DETECTION_OUTPUT_DIR: which trained detector to load. Default
 # unchanged, so the reported predmeal_prob channel and every existing caller

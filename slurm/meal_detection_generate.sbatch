@@ -9,7 +9,7 @@
 #SBATCH --output=logs/%x_%j.out
 
 set -euo pipefail
-REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
+REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your cgm-tsfm-benchmark checkout}
 # py-jax deliberately NOT loaded -- cudnn version conflict with nn.LSTM's
 # cuDNN kernel, see meal_detection_train.sbatch.
 ml load math py-pytorch/2.9.1_py314 py-huggingface-hub/0.36.0_py314 py-safetensors/0.7.0_py314 py-numpy/2.3.5_py314 py-pandas/2.3.3_py314 py-pyarrow/22.0.0_py314

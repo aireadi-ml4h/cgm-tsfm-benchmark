@@ -23,7 +23,7 @@
 # by `ls | head` and not by whatever the training script printed as "best" --
 # its ModelCheckpoint top-k ranking resets on every Slurm requeue.
 set -euo pipefail
-REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
+REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your cgm-tsfm-benchmark checkout}
 CELLS=(disjoint_mode_nocov proportional_mode proportional_mode_nocov)
 NOCOV=(1 0 1)
 SPLIT=(ssmcgm ssmcgm_proportional ssmcgm_proportional)

@@ -42,7 +42,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from cgmacros_dataset import SEQ_LEN, load_participant_series  # noqa: E402
 from generate_meal_probability import load_model  # noqa: E402
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 # MEAL_DETECTION_OUTPUT_DIR: the same env var train.py already uses, so a
 # checkpoint trained into an alternate directory can be evaluated without
 # touching the reported one. Default unchanged, so every existing invocation

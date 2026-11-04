@@ -20,11 +20,13 @@ out here, unchanged in method, so LOO ablation arms (different results_dir
 per arm, e.g. chronos2_zeroshot_results_loo_drop_oxygen_saturation/) can
 reuse it.
 """
+import os
+
 import numpy as np
 import pandas as pd
 from scipy import stats
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 DEFAULT_EVAL_DIR = f"{REPO_ROOT}/model_input/zeroshot_eval"
 
 

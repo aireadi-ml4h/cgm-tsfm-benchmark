@@ -72,7 +72,7 @@ from build_participant_grid import (  # noqa: E402
 )
 from windows import CONTEXT_BINS  # noqa: E402
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 PERS_DIR = f"{REPO_ROOT}/model_input/personalization"
 
 HISTORY_DAYS = int(os.environ.get("CHRONOS2_PERS_HISTORY_DAYS", "7"))

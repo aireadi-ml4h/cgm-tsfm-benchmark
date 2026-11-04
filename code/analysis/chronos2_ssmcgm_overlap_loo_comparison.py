@@ -35,7 +35,7 @@ import pandas as pd
 sys.path.insert(0, os.path.dirname(__file__))
 from chronos2_matched_comparison import compare_arms  # noqa: E402
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 BASELINE_RESULTS_DIR = f"{REPO_ROOT}/chronos2_zeroshot_results/full/imputed"
 OVERLAP_RESULTS_DIR = f"{REPO_ROOT}/chronos2_zeroshot_results/full/with_ssmcgm_overlap"
 LOO_DIR = f"{REPO_ROOT}/chronos2_zeroshot_results/loo_ssmcgm_overlap"

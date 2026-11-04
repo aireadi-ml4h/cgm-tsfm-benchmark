@@ -21,7 +21,7 @@
 #SBATCH --output=logs/%x_%A_%a.out
 #SBATCH --error=logs/%x_%A_%a.err
 
-: "${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}"
+: "${AIREADI_ROOT:?set AIREADI_ROOT to your cgm-tsfm-benchmark checkout}"
 
 # arm | analysis-dataframe dir | zeroshot-eval output dir  ("-" = script default)
 ARMS=(

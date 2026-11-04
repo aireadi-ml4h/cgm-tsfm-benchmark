@@ -39,7 +39,7 @@
 # best-of-10, not final-of-10. Since best-of-10 >= final-of-10 on val AUPRC,
 # an underperforming result here cannot be blamed on that.
 set -euo pipefail
-REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
+REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your cgm-tsfm-benchmark checkout}
 # Same module set as slurm/meal_detection_train.sbatch -- see its comment for
 # why py-jax must NOT be loaded (cuDNN conflict kills nn.LSTM).
 ml load math py-pytorch/2.9.1_py314 py-huggingface-hub/0.36.0_py314 py-safetensors/0.7.0_py314 py-numpy/2.3.5_py314 py-pandas/2.3.3_py314 py-pyarrow/22.0.0_py314

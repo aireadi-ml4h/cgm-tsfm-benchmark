@@ -48,7 +48,7 @@ import sys
 
 import pandas as pd
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from build_ssmcgm_input import build_participant_series, KEEP_COLS  # noqa: E402
 from build_participant_grid import load_participants_covariates  # noqa: E402

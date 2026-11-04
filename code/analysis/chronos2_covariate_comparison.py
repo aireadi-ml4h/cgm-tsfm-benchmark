@@ -67,7 +67,7 @@ import pandas as pd
 sys.path.insert(0, os.path.dirname(__file__))
 from chronos2_matched_comparison import compare_arms  # noqa: E402
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 EVAL_DIR = os.environ.get("CHRONOS2_EVAL_DIR_OVERRIDE", f"{REPO_ROOT}/model_input/zeroshot_eval")
 RESULTS_DIR = os.environ.get("CHRONOS2_RESULTS_DIR_OVERRIDE", f"{REPO_ROOT}/chronos2_zeroshot_results/full/imputed")
 HORIZON_BINS = {"30min": 6, "1h": 12, "2h": 24, "3h": 36, "4h": 48}

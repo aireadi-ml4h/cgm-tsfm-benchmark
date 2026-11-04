@@ -23,7 +23,7 @@
 # the headline figure. The honest report is the mean and range across seeds,
 # with seed 42 identified as the optimistic end.
 set -euo pipefail
-REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
+REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your cgm-tsfm-benchmark checkout}
 SCRATCH_BASE="$AIREADI_SCRATCH/aireadi_cgmlsm"
 RESULTS_ROOT="$REPO_ROOT/cgmlsm_results/newbase_test"
 

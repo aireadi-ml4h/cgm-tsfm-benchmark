@@ -49,7 +49,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from build_ssmcgm_input import build_participant_series, KEEP_COLS, ANALYSIS_DIR  # noqa: E402
 from build_participant_grid import load_participants_covariates, build_grid  # noqa: E402
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 OUTPUT_DIR = f"{REPO_ROOT}/model_input/ssmcgm"
 
 MODE = os.environ.get("SSMCGM_POP_SPLIT_MODE", "paper")

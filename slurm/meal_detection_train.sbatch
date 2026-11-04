@@ -9,7 +9,7 @@
 #SBATCH --output=logs/%x_%j.out
 
 set -euo pipefail
-REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
+REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your cgm-tsfm-benchmark checkout}
 # Reuses venv-timesfm's pytorch/pandas/numpy install, but WITHOUT loading
 # the py-jax module: py-jax pulls in cudnn/9.13.1, which conflicts with the
 # cudnn/9.14.0 py-pytorch/2.9.1_py314 was built against -- harmless for

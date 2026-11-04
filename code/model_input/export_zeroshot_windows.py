@@ -29,7 +29,8 @@ from windows import (  # noqa: E402
     COVARIATE_APPLICABILITY_CHANNELS, COVARIATE_FEATURE_CHANNELS, CONTEXT_BINS, HORIZONS_BINS,
 )
 
-WINDOW_INDEX_PATH = "/path/to/aireadi-collab/model_input/window_index.csv"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
+WINDOW_INDEX_PATH = f"{REPO_ROOT}/model_input/window_index.csv"
 # ZEROSHOT_EVAL_OUTPUT_DIR_OVERRIDE: used for the non-LOCF wearables variant
 # (paired with build_participant_grid's ANALYSIS_DIR_OVERRIDE) so it lands in
 # its own directory rather than overwriting the LOCF'd zeroshot_eval/ used by
@@ -39,7 +40,7 @@ WINDOW_INDEX_PATH = "/path/to/aireadi-collab/model_input/window_index.csv"
 # covariate values populated into each window change.
 OUTPUT_DIR = os.environ.get(
     "ZEROSHOT_EVAL_OUTPUT_DIR_OVERRIDE",
-    "/path/to/aireadi-collab/model_input/zeroshot_eval",
+    f"{REPO_ROOT}/model_input/zeroshot_eval",
 )
 # ZEROSHOT_EVAL_SPLIT: which recommended_split to export. Defaults to "test",
 # which is what every existing zeroshot_eval/ file and every Chronos-2/

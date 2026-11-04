@@ -32,7 +32,7 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 sys.path.insert(0, os.path.join(REPO_ROOT, "code"))
 sys.path.insert(0, os.path.join(REPO_ROOT, "code/model_input"))
 from chronos2_matched_comparison import load_window_keys  # noqa: E402

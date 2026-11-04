@@ -31,7 +31,7 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 sys.path.insert(0, os.path.join(REPO_ROOT, "code/model_input"))
 # Sibling modules live in adjacent topic directories under code/.
 _CODE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

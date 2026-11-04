@@ -27,7 +27,7 @@
 # four high_p slots the GPU training jobs share.
 
 set -euo pipefail
-REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
+REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your cgm-tsfm-benchmark checkout}
 ml load devel py-numpy/1.26.3_py312 py-pandas/2.2.1_py312
 ml load math py-scipy/1.12.0_py312 py-scikit-learn/1.5.1_py312 py-lightgbm/4.5.0_py312
 

@@ -114,7 +114,7 @@
 # input here, and pers_set_fit "$PERS_K" picks the config tuned at that k.
 
 set -euo pipefail
-REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
+REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your cgm-tsfm-benchmark checkout}
 PERS_BAR="${PERS_BAR:-7}"
 PERS_K="${PERS_K:-7d}"
 export HF_HOME=$AIREADI_SCRATCH/hf_cache

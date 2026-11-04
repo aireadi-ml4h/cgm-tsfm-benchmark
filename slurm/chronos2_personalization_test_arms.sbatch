@@ -75,7 +75,7 @@
 # given these channels", not the channels question itself.
 
 set -euo pipefail
-REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
+REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your cgm-tsfm-benchmark checkout}
 PERS_BAR="${PERS_BAR:-7}"
 export HF_HOME=$AIREADI_SCRATCH/hf_cache
 mkdir -p "$HF_HOME"

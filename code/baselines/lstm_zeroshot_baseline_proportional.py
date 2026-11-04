@@ -28,7 +28,7 @@ import torch
 import torch.nn as nn
 from scipy import stats
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 TRAIN_CSV = f"{REPO_ROOT}/model_input/ssmcgm/ssmcgm_train_proportional.csv"
 TEST_CSV = f"{REPO_ROOT}/model_input/ssmcgm/ssmcgm_test_proportional.csv"
 OUTPUT_DIR = f"{REPO_ROOT}/lstm_zeroshot_results_proportional"

@@ -31,7 +31,7 @@ import os
 import numpy as np
 import pandas as pd
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 ARM_A = os.environ.get("CGMLSM_ARM_A", os.path.join(REPO_ROOT, "cgmlsm_results", "from_scratch"))
 ARM_B = os.environ.get(
     "CGMLSM_ARM_B", os.path.join(REPO_ROOT, "cgmlsm_results", "pretrain_no_t1d", "finetuned_final")

@@ -226,7 +226,7 @@ for _d in ("analysis", "baselines", "cgmlsm", "chronos2", "meal_detection", "mod
     sys.path.insert(0, os.path.join(_CODE, _d))
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "model_input"))
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 sys.path.insert(0, f"{REPO_ROOT}/code/external/chronos-forecasting/src")
 from chronos import BaseChronosPipeline  # noqa: E402
 

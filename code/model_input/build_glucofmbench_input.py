@@ -105,7 +105,8 @@ from coverage import is_window_eligible  # noqa: E402
 from windows import CONTEXT_BINS  # noqa: E402
 from cgmlsm_vocab import tokenize_glucose, tokenize_tod  # noqa: E402
 
-RAW_DIR = "/path/to/aireadi-collab/model_input/glucofmbench_raw"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
+RAW_DIR = f"{REPO_ROOT}/model_input/glucofmbench_raw"
 # GLUCOFMBENCH_OUTPUT_DIR_OVERRIDE / GLUCOFMBENCH_EXCLUDE_COHORTS: used for the
 # T1D-excluded variant (AI-READI is a T2D-staged population -- healthy/
 # pre-diabetes/oral-medication/insulin-dependent per participants.tsv's
@@ -117,7 +118,7 @@ RAW_DIR = "/path/to/aireadi-collab/model_input/glucofmbench_raw"
 # temporal/internal/train all only ever see the retained cohorts.
 OUTPUT_DIR = os.environ.get(
     "GLUCOFMBENCH_OUTPUT_DIR_OVERRIDE",
-    "/path/to/aireadi-collab/model_input/glucofmbench",
+    f"{REPO_ROOT}/model_input/glucofmbench",
 )
 EXCLUDE_COHORTS = [c.strip() for c in os.environ.get("GLUCOFMBENCH_EXCLUDE_COHORTS", "").split(",") if c.strip()]
 BIN_SECONDS = 300  # 5 minutes, verified as this file's uniform native grid (see module docstring)

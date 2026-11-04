@@ -48,7 +48,7 @@ import pandas as pd
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from cgmlsm_matched_comparison import compare_arms, common_scored_keys  # noqa: E402
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 VAL_ROOT = os.environ.get(
     "CGMLSM_PERS_VAL_ROOT", os.path.join(REPO_ROOT, "cgmlsm_personalization_results", "val")
 )

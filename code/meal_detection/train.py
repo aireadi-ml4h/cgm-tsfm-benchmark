@@ -36,9 +36,10 @@ sys.path.insert(0, os.path.dirname(__file__))
 from cgmacros_dataset import build_dataset  # noqa: E402
 from model import MealDetector  # noqa: E402
 
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 OUTPUT_DIR = os.environ.get(
     "MEAL_DETECTION_OUTPUT_DIR",
-    "/path/to/aireadi-collab/model_input/meal_detection",
+    f"{REPO_ROOT}/model_input/meal_detection",
 )
 EPOCHS = int(os.environ.get("MEAL_DETECTION_EPOCHS", "40"))
 PATIENCE = int(os.environ.get("MEAL_DETECTION_PATIENCE", "6"))

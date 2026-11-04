@@ -31,8 +31,7 @@ copy of both datasets under their respective terms.
 ## Setup
 
 These scripts were written for a Slurm HPC cluster with an Lmod module system.
-Absolute paths appear as placeholders: point `AIREADI_ROOT` at your checkout for
-the Slurm scripts, and the `REPO_ROOT` constant at the top of each Python file.
+Point `AIREADI_ROOT` at your checkout; Slurm and Python scripts both read it.
 Point `AIREADI_SCRATCH` at a directory with room for large files: the Hugging
 Face cache, CGM-LSM checkpoints and the CGMacros download. Submit jobs from the
 repository root; Slurm writes job logs to `logs/`, which must exist first.

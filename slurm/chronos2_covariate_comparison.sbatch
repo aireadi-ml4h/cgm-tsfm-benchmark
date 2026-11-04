@@ -9,7 +9,7 @@
 #SBATCH --error=logs/%x_%j.err
 
 set -euo pipefail
-REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
+REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your cgm-tsfm-benchmark checkout}
 # No GPU/torch needed (pure pandas/scipy), but reuses venv-chronos's module
 # set anyway -- the venv's python3.14 build needs these modules' shared libs
 # loaded even for CPU-only scripts.

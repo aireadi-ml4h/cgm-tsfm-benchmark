@@ -25,7 +25,7 @@ import os
 import subprocess
 import sys
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 SWEEP_DIR = f"{REPO_ROOT}/model_input/meal_detection/sweep"
 TRAIN_SCRIPT = f"{REPO_ROOT}/code/meal_detection/train.py"
 

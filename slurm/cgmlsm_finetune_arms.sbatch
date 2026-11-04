@@ -32,7 +32,7 @@
 #SBATCH --output=logs/%x_%A_%a.out
 set -euo pipefail
 
-REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
+REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your cgm-tsfm-benchmark checkout}
 CGMLSM_WORK_ROOT=${CGMLSM_WORK_ROOT:-/path/to/work/aireadi_cgmlsm}
 
 # arm_name | pretrained ckpt subdir | output subdir | epochs | learning rate

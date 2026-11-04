@@ -8,7 +8,7 @@
 #SBATCH --output=logs/%x_%j.out
 
 set -euo pipefail
-REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
+REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your cgm-tsfm-benchmark checkout}
 export HF_HOME=$AIREADI_SCRATCH/hf_cache
 mkdir -p "$HF_HOME"
 

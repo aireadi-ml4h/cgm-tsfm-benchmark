@@ -114,7 +114,7 @@ import pandas as pd
 import torch
 from chronos import BaseChronosPipeline
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 # CHRONOS2_EVAL_DIR_OVERRIDE / CHRONOS2_RESULTS_DIR_OVERRIDE: used for the
 # non-LOCF wearables variant so its predictions land in their own directory,
 # never overwriting the existing LOCF'd baseline results.

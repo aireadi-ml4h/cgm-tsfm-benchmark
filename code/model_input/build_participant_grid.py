@@ -36,7 +36,7 @@ import os
 import numpy as np
 import pandas as pd
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 # ANALYSIS_DIR_OVERRIDE: lets a caller point at a different analysis_dataframe
 # variant (e.g. the Chronos-2/TimesFM-only non-LOCF'd wearables build) without
 # changing the default every other consumer (SSM-CGM's build_ssmcgm_input.py,

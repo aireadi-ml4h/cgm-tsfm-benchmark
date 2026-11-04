@@ -67,7 +67,7 @@ import pandas as pd
 import torch
 from transformers import Trainer, TrainingArguments, default_data_collator
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 sys.path.append(os.path.join(REPO_ROOT, "code/external/cgmlsm/code/pipeline"))
 # Sibling modules live in adjacent topic directories under code/.
 _CODE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

@@ -33,7 +33,7 @@
 #     the personalization arm built on top of it irreproducible, which is worse
 #     than a smaller but solid gain.
 set -euo pipefail
-REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
+REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your cgm-tsfm-benchmark checkout}
 SCRATCH_BASE="$AIREADI_SCRATCH/aireadi_cgmlsm"
 PRETRAINED="$SCRATCH_BASE/pretrain_glucofmbench_no_t1d_v1/final"
 VAL_WINDOWS="$REPO_ROOT/model_input/cgmlsm/cgmlsm_val_windows.csv"

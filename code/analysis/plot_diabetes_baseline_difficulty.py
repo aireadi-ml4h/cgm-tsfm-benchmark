@@ -3,12 +3,14 @@ status group, both models, all 5 horizons. Reads the existing check1 CSV,
 produces no new numbers. Follows this project's existing figure convention
 (matplotlib Agg backend, dpi=150, bbox_inches="tight",
 code/preprocessing/qc/raw_stream_qc/report.py)."""
+import os
+
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import pandas as pd
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 df = pd.read_csv(f"{REPO_ROOT}/chronos2_zeroshot_results/diabetes_status_check1_baseline_difficulty.csv")
 
 groups = ["mean_healthy", "mean_pre_diabetes_lifestyle_controlled",
@@ -34,7 +36,6 @@ axes[1].legend(fontsize=8, loc="upper left")
 fig.suptitle("Zero-shot glucose-only MAE by diabetes status (report.md Sec 27, check 1)")
 fig.tight_layout()
 out_path = f"{REPO_ROOT}/zeroshot_results_reports/figures/diabetes_status_baseline_difficulty.png"
-import os
 os.makedirs(os.path.dirname(out_path), exist_ok=True)
 fig.savefig(out_path, dpi=150, bbox_inches="tight")
 print(f"saved {out_path}")

@@ -20,7 +20,7 @@
 #SBATCH --array=0-1
 #SBATCH --output=logs/%x_%A_%a.out
 set -euo pipefail
-REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your aireadi-collab checkout}
+REPO_ROOT=${AIREADI_ROOT:?set AIREADI_ROOT to your cgm-tsfm-benchmark checkout}
 
 # arm | horizon | checkpoint (under ssmcgm_train_results) | output subdir
 ARMS=(

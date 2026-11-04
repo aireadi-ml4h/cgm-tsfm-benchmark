@@ -17,7 +17,7 @@ from cgmacros_dataset import SEQ_LEN, load_participant_series  # noqa: E402
 from generate_meal_probability import load_model  # noqa: E402
 from evaluate_event_level import to_intervals, event_level_recall_precision  # noqa: E402
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 OUTPUT_DIR = f"{REPO_ROOT}/model_input/meal_detection"
 STRIDE = 1
 TRUTH_THRESHOLD = 0.5

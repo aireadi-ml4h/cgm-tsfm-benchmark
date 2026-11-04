@@ -55,7 +55,7 @@ import pandas as pd
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from cgmlsm_matched_comparison import compare_arms, common_scored_keys, load_arm  # noqa: E402
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 BASE_TAG = os.environ.get("CGMLSM_PERS_BASE_TAG", "finetune_sweep4_ep2_lr1e-2")
 TEST_ROOT = os.environ.get(
     "CGMLSM_PERS_TEST_ROOT",

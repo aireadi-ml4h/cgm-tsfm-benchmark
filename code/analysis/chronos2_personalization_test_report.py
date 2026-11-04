@@ -119,7 +119,7 @@ from chronos2_matched_comparison import (  # noqa: E402
     DEFAULT_EVAL_DIR, compare_arms, load_window_keys)
 from chronos2_personalization_power_calibration import mde, per_participant_diffs  # noqa: E402
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 # CHRONOS2_PERS_TEST_ROOT: lets a smoke run point the personalization arms at a
 # stand-in tree, so this script's whole path (compare_arms -> MDE -> verdict ->
 # both horizon blocks) can be exercised BEFORE any real arm exists. Without it

@@ -16,7 +16,7 @@ import sys
 
 import pandas as pd
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 sys.path.insert(0, f"{REPO_ROOT}/code")
 from chronos2_matched_comparison import compare_arms  # noqa: E402
 

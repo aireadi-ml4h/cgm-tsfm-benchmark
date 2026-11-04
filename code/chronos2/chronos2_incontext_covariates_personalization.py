@@ -70,7 +70,7 @@ import numpy as np
 import pandas as pd
 import torch
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # Sibling modules live in adjacent topic directories under code/.
 _CODE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

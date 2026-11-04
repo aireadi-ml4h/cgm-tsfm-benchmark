@@ -31,7 +31,7 @@ import sys
 import torch
 from transformers import Trainer, TrainingArguments, default_data_collator
 
-REPO_ROOT = "/path/to/aireadi-collab"
+REPO_ROOT = os.environ["AIREADI_ROOT"]
 sys.path.append(os.path.dirname(__file__))
 from cgmlsm_train import CgmLsmTokenDataset, build_model  # noqa: E402
 
