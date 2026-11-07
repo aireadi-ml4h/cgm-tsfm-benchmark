@@ -8,6 +8,7 @@
 *.arrow
 *.json
 !requirements/*.json
+*.gz
 
 # Model artifacts
 *.ckpt
@@ -18,8 +19,9 @@
 *.h5
 *.hdf5
 
-# Run outputs
+# Run outputs (*_results_*/ covers suffixed runs, e.g. lightgbm_zeroshot_results_l2/)
 *_results/
+*_results_*/
 lightning_logs/
 logs/
 slurm-*.out

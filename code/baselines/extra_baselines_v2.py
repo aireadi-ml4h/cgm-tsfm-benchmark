@@ -1,7 +1,8 @@
 """Circadian (seasonal-naive) and MLP baselines, on the shared eval windows.
 
-Supersedes code/baselines/extra_baselines.py, which FAILED (job 42632271) and had two
-real defects. Both are fixed here and both are worth recording:
+Supersedes an earlier extra_baselines.py (not included in this repository),
+which FAILED (job 42632271) and had two real defects. Both are fixed here and
+both are worth recording:
 
   1. LEAKAGE (serious). The old version drew training participants from
      `widx["person_id"].unique()` -- every participant, including the TEST
@@ -54,14 +55,44 @@ sys.path.insert(0, os.path.join(REPO_ROOT, "code/model_input"))
 import lightgbm_zeroshot_baseline as L  # noqa: E402
 from build_participant_grid import load_cleaned_glucose_binned  # noqa: E402
 
-OUTPUT_DIR = f"{REPO_ROOT}/extra_baselines_results"
+# MLP_IMPL / MLP_LOSS / MLP_OUTPUT_SUFFIX: added 2026-09-14 for the
+# training-objective control. sklearn's MLPRegressor supports squared error
+# ONLY -- there is no loss argument -- so testing an absolute-error objective
+# needs a different implementation, not a different parameter. MLP_IMPL=torch
+# swaps in a torch MLP mirroring MLPRegressor's architecture and optimiser,
+# with MLP_LOSS selecting l2 or l1. Running torch/l2 as well as torch/l1 is
+# what makes the comparison clean: torch-l2 vs the sklearn result checks the
+# reimplementation is faithful, and torch-l1 vs torch-l2 then isolates the
+# loss with the framework held fixed.
+# The paper reports the torch/l1 model, so that is the default here. The
+# original squared-error run is MLP_IMPL=sklearn MLP_LOSS=l2 (with e.g.
+# MLP_OUTPUT_SUFFIX=_sklearn_l2 so it doesn't overwrite the default output).
+MLP_IMPL = os.environ.get("MLP_IMPL", "torch")
+MLP_LOSS = os.environ.get("MLP_LOSS", "l1")
+# Fail loudly on a typo: otherwise any MLP_LOSS other than "l1" trains on
+# squared error, and any MLP_IMPL other than "sklearn" selects torch.
+if MLP_IMPL not in ("torch", "sklearn") or MLP_LOSS not in ("l1", "l2"):
+    raise SystemExit(f"MLP_IMPL must be torch|sklearn and MLP_LOSS l1|l2; got {MLP_IMPL!r}, {MLP_LOSS!r}")
+if MLP_IMPL == "sklearn" and MLP_LOSS != "l2":
+    raise SystemExit("sklearn's MLPRegressor supports squared error only: set MLP_LOSS=l2 or MLP_IMPL=torch")
+OUTPUT_DIR = f"{REPO_ROOT}/extra_baselines_results{os.environ.get('MLP_OUTPUT_SUFFIX','')}"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 HORIZONS = L.HORIZONS
 BINS_PER_DAY = 288          # 5-minute grid
 MAX_LOOKBACK_DAYS = 7
 TOL_BINS = 3                # +/- 15 min around the same clock time
-SEED = 42
+# SAMPLE_SEED / TRAIN_SEED: added 2026-10-07 for the seed-stability check
+# (code/seed_stability/). SAMPLE_SEED drives the 300-participant sample and the
+# TorchMLP's 10% early-stopping holdout; TRAIN_SEED drives torch.manual_seed
+# only (weight init and mini-batch shuffle order). Both default to 42, which
+# reproduces the original run exactly: previously TorchMLP seeded torch AND its
+# holdout rng from one `seed`, and with both 42 the draws are identical.
+# The sklearn path keeps a single random_state (init and holdout are not
+# separable there) and uses SAMPLE_SEED; it is not part of the seed check.
+SAMPLE_SEED = int(os.environ.get("SAMPLE_SEED", "42"))
+TRAIN_SEED = int(os.environ.get("TRAIN_SEED", "42"))
+SEED = SAMPLE_SEED
 
 
 def circadian_predict(vals, t_idx, steps_ahead):
@@ -91,6 +122,91 @@ def circadian_predict(vals, t_idx, steps_ahead):
     return float(np.mean(picks)) if picks else None
 
 
+class TorchMLP:
+    """MLPRegressor's architecture and optimiser, with a selectable loss.
+
+    Mirrors sklearn MLPRegressor(hidden_layer_sizes=(128,128),
+    activation="relu", solver="adam", learning_rate_init=1e-3,
+    batch_size=512, max_iter=60, early_stopping=True, n_iter_no_change=5,
+    validation_fraction=0.1) -- including the 10% early-stopping holdout and
+    the patience rule, so that torch/l2 should land close to the sklearn run.
+    Exposes fit/predict so it drops into the existing make_pipeline call
+    unchanged.
+
+    Early stopping is evaluated on the SELECTED loss, not always on squared
+    error: stopping an L1 model on an L2 criterion would reintroduce the very
+    mismatch this control exists to remove.
+    """
+
+    def __init__(self, loss="l2", seed=42, holdout_seed=42, hidden=(128, 128), lr=1e-3,
+                 batch_size=512, max_epochs=60, patience=5, val_frac=0.1):
+        self.loss, self.seed, self.hidden = loss, seed, hidden
+        self.holdout_seed = holdout_seed
+        self.lr, self.batch_size = lr, batch_size
+        self.max_epochs, self.patience, self.val_frac = max_epochs, patience, val_frac
+
+    def fit(self, X, y):
+        import torch
+        import torch.nn as nn
+
+        torch.manual_seed(self.seed)
+        rng = np.random.default_rng(self.holdout_seed)
+        X = np.asarray(X, dtype=np.float32)
+        y = np.asarray(y, dtype=np.float32).reshape(-1)
+
+        idx = rng.permutation(len(X))
+        n_val = max(1, int(round(self.val_frac * len(X))))
+        va, tr = idx[:n_val], idx[n_val:]
+        self.holdout_idx_, self.n_rows_ = va, len(X)
+
+        dev = "cuda" if torch.cuda.is_available() else "cpu"
+        layers, d = [], X.shape[1]
+        for h in self.hidden:
+            layers += [nn.Linear(d, h), nn.ReLU()]
+            d = h
+        layers.append(nn.Linear(d, 1))
+        net = nn.Sequential(*layers).to(dev)
+
+        crit = nn.L1Loss() if self.loss == "l1" else nn.MSELoss()
+        opt = torch.optim.Adam(net.parameters(), lr=self.lr)
+
+        Xtr = torch.tensor(X[tr], device=dev); ytr = torch.tensor(y[tr], device=dev)
+        Xva = torch.tensor(X[va], device=dev); yva = torch.tensor(y[va], device=dev)
+
+        best, best_state, bad = float("inf"), None, 0
+        for epoch in range(self.max_epochs):
+            net.train()
+            perm = torch.randperm(len(Xtr), device=dev)
+            for i in range(0, len(Xtr), self.batch_size):
+                b = perm[i:i + self.batch_size]
+                opt.zero_grad()
+                crit(net(Xtr[b]).squeeze(-1), ytr[b]).backward()
+                opt.step()
+            net.eval()
+            with torch.no_grad():
+                vl = float(crit(net(Xva).squeeze(-1), yva))
+            if vl < best - 1e-6:
+                best, bad = vl, 0
+                best_state = {k: v.detach().clone() for k, v in net.state_dict().items()}
+            else:
+                bad += 1
+                if bad >= self.patience:
+                    print(f"  early stop at epoch {epoch} (best val {self.loss} {best:.4f})",
+                          file=sys.stderr)
+                    break
+        if best_state is not None:
+            net.load_state_dict(best_state)
+        self._net, self._dev = net, dev
+        return self
+
+    def predict(self, X):
+        import torch
+        self._net.eval()
+        with torch.no_grad():
+            t = torch.tensor(np.asarray(X, dtype=np.float32), device=self._dev)
+            return self._net(t).squeeze(-1).cpu().numpy()
+
+
 def main():
     print("loading window_index.csv...", flush=True)
     widx = pd.read_csv(L.WINDOW_INDEX, dtype={"person_id": str})
@@ -100,10 +216,9 @@ def main():
     assert not (set(train_pids_all) & test_pids_all), "train/test participant overlap -- leakage"
     print(f"train pool {len(train_pids_all)}, test pool {len(test_pids_all)}", flush=True)
 
-    rng = np.random.default_rng(SEED)
-    sample_pids = rng.choice(train_pids_all,
-                             size=min(L.N_TRAIN_PARTICIPANTS, len(train_pids_all)),
-                             replace=False)
+    # L.sample_train_participants: mode "random" (default) is the original
+    # rng.choice call with the same seed, so existing runs are unchanged.
+    sample_pids = L.sample_train_participants(train_pids_all, widx, L.N_TRAIN_PARTICIPANTS, SEED)
 
     print(f"building training rows from {len(sample_pids)} TRAIN participants...", flush=True)
     all_rows = []
@@ -118,20 +233,31 @@ def main():
     X = train_df[feature_cols].to_numpy(dtype=np.float32)
     y = train_df["y"].to_numpy(dtype=np.float32)
 
-    from sklearn.neural_network import MLPRegressor
     from sklearn.preprocessing import StandardScaler
     from sklearn.pipeline import make_pipeline
 
-    print("fitting MLP (128x128, early stopping)...", flush=True)
-    mlp = make_pipeline(
-        StandardScaler(),
-        MLPRegressor(hidden_layer_sizes=(128, 128), activation="relu",
-                     learning_rate_init=1e-3, batch_size=512, max_iter=60,
-                     early_stopping=True, n_iter_no_change=5,
-                     validation_fraction=0.1, random_state=SEED, verbose=False),
-    )
+    if MLP_IMPL == "sklearn":
+        from sklearn.neural_network import MLPRegressor
+        print("fitting MLP (sklearn, 128x128, squared error, early stopping)...", flush=True)
+        mlp = make_pipeline(
+            StandardScaler(),
+            MLPRegressor(hidden_layer_sizes=(128, 128), activation="relu",
+                         learning_rate_init=1e-3, batch_size=512, max_iter=60,
+                         early_stopping=True, n_iter_no_change=5,
+                         validation_fraction=0.1, random_state=SEED, verbose=False),
+        )
+    else:
+        print(f"fitting MLP (torch, 128x128, {MLP_LOSS} loss, early stopping)...", flush=True)
+        mlp = make_pipeline(StandardScaler(),
+                            TorchMLP(loss=MLP_LOSS, seed=TRAIN_SEED, holdout_seed=SAMPLE_SEED))
     mlp.fit(X, y)
     print("MLP fit complete", flush=True)
+    if L.WRITE_SEED_MANIFEST:
+        print(f"SAMPLE_SEED={SAMPLE_SEED} TRAIN_SEED={TRAIN_SEED}", flush=True)
+        est = mlp[-1]
+        L.write_seed_manifest(OUTPUT_DIR, SAMPLE_SEED, TRAIN_SEED, sample_pids,
+                              holdout_idx=getattr(est, "holdout_idx_", None),
+                              n_rows=getattr(est, "n_rows_", None))
 
     series_cache = {}
 

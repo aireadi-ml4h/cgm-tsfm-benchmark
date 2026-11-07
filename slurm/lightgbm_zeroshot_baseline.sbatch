@@ -2,10 +2,17 @@
 #SBATCH --job-name=lightgbm_zeroshot
 #SBATCH --partition=normal
 #SBATCH --qos=normal
-#SBATCH --time=01:00:00
-#SBATCH --mem=32GB
+#SBATCH --time=04:00:00
+#SBATCH --mem=64GB
 #SBATCH --cpus-per-task=8
 #SBATCH --output=logs/%x_%j.out
+#
+# LightGBM trained on absolute error (objective regression_l1), the model the
+# paper reports. That is also the script's default; it is set explicitly below
+# so the job states what it runs. For the original squared-error model, use
+# LGBM_OBJECTIVE=regression LGBM_OUTPUT_SUFFIX=_l2 (the suffix keeps it from
+# overwriting this run's output). Time and memory match the job that produced
+# the paper's run.
 #
 # FIX 2026-09-09: the previous version did `pip install lightgbm` inside
 # venv-chronos. There is no lightgbm wheel for the py314 stack, so pip fell
@@ -32,4 +39,4 @@ ml load devel py-numpy/1.26.3_py312 py-pandas/2.2.1_py312
 ml load math py-scipy/1.12.0_py312 py-scikit-learn/1.5.1_py312 py-lightgbm/4.5.0_py312
 
 python3 -c "import lightgbm, sklearn, pandas, numpy, scipy; print('lightgbm', lightgbm.__version__, 'sklearn', sklearn.__version__)"
-python3 "$REPO_ROOT/code/baselines/lightgbm_zeroshot_baseline.py"
+LGBM_OBJECTIVE=regression_l1 python3 "$REPO_ROOT/code/baselines/lightgbm_zeroshot_baseline.py"

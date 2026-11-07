@@ -42,12 +42,43 @@ from build_participant_grid import load_cleaned_glucose_binned  # noqa: E402
 WINDOW_INDEX = f"{REPO_ROOT}/model_input/window_index.csv"
 ZEROSHOT_EVAL_DIR = f"{REPO_ROOT}/model_input/zeroshot_eval"
 CHRONOS2_DIR = f"{REPO_ROOT}/chronos2_zeroshot_results/full/imputed"
-OUTPUT_DIR = f"{REPO_ROOT}/lightgbm_zeroshot_results"
+# LGBM_OBJECTIVE / LGBM_OUTPUT_SUFFIX: added 2026-09-14 to run an L1-objective
+# control. The objective was originally never chosen -- LGBMRegressor's default
+# is `regression` (L2), while the LSTM and Mamba baselines explicitly use
+# nn.L1Loss() to match the MAE eval metric. That mismatch was a candidate
+# explanation for LightGBM losing to Chronos-2 at 30 min but winning at 2 h, so
+# it needed isolating rather than assuming. Everything else -- features, seed,
+# n_estimators, learning rate, depth, leaves, training participants, stride --
+# is held identical, so the only difference between the two runs is the loss.
+# The paper reports the L1 model, so `regression_l1` is the default here. For
+# the original squared-error model, set LGBM_OBJECTIVE=regression (and e.g.
+# LGBM_OUTPUT_SUFFIX=_l2 so it doesn't overwrite the default output).
+OBJECTIVE = os.environ.get("LGBM_OBJECTIVE", "regression_l1")
+OUTPUT_SUFFIX = os.environ.get("LGBM_OUTPUT_SUFFIX", "")
+OUTPUT_DIR = f"{REPO_ROOT}/lightgbm_zeroshot_results{OUTPUT_SUFFIX}"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 N_TRAIN_PARTICIPANTS = int(os.environ.get("LGBM_N_TRAIN_PARTICIPANTS", "300"))
 TRAIN_STRIDE_BINS = int(os.environ.get("LGBM_TRAIN_STRIDE_BINS", "6"))  # 30 min
-SEED = 42
+# SAMPLE_SEED / TRAIN_SEED: added 2026-10-07 for the seed-stability check
+# (code/seed_stability/). SAMPLE_SEED drives the participant sample; TRAIN_SEED
+# is passed to random_state, which has NO effect here because no subsampling,
+# bagging (subsample/subsample_freq) or feature fraction (colsample_bytree) is
+# set -- LightGBM is deterministic given its data, so only the arm-B
+# ("full resample") variant is run for it. Both default to 42, which reproduces
+# the original run exactly.
+SAMPLE_SEED = int(os.environ.get("SAMPLE_SEED", "42"))
+TRAIN_SEED = int(os.environ.get("TRAIN_SEED", "42"))
+SEED = SAMPLE_SEED  # kept for importers (extra_baselines_v2.py does not use it)
+sys.path.insert(0, os.path.join(_CODE, "seed_stability"))
+from seed_manifest import seed_env_set, write_seed_manifest  # noqa: E402
+WRITE_SEED_MANIFEST = seed_env_set()
+
+# TRAIN_SAMPLE_MODE (2026-11-03, FMTS training-size curve): participant sampling
+# lives in code/baselines/train_sampling.py, shared by the trained baselines. The
+# default (random) is the original rng.choice call, so existing runs are unchanged.
+from train_sampling import TRAIN_SAMPLE_MODE, sample_train_participants  # noqa: E402,F401
+
 MAX_STEPS_AHEAD = 48  # covers 30min(6)/1h(12)/2h(24), leaves headroom to 4h(48)
 LAGS = [1, 2, 3, 6, 12, 24, 36, 72, 144]
 ROLL_WINDOWS = [6, 12, 36, 144]
@@ -118,8 +149,10 @@ def main():
     print(f"train pool: {len(train_pids_all)} participants, test pool: {len(test_pids_all)}", file=sys.stderr)
     assert not (set(train_pids_all) & test_pids_all), "train/test participant overlap -- leakage"
 
-    rng = np.random.default_rng(SEED)
-    sample_pids = rng.choice(train_pids_all, size=min(N_TRAIN_PARTICIPANTS, len(train_pids_all)), replace=False)
+    sample_pids = sample_train_participants(train_pids_all, widx, N_TRAIN_PARTICIPANTS, SAMPLE_SEED)
+    if WRITE_SEED_MANIFEST:
+        print(f"SAMPLE_SEED={SAMPLE_SEED} TRAIN_SEED={TRAIN_SEED}", file=sys.stderr)
+        write_seed_manifest(OUTPUT_DIR, SAMPLE_SEED, TRAIN_SEED, sample_pids)
 
     print(f"building training rows from {len(sample_pids)} sampled train participants...", file=sys.stderr)
     all_rows = []
@@ -133,8 +166,10 @@ def main():
 
     import lightgbm as lgb
     feature_cols = [c for c in train_df.columns if c != "y"]
-    model = lgb.LGBMRegressor(n_estimators=300, learning_rate=0.05, max_depth=6,
-                               num_leaves=31, random_state=SEED, n_jobs=4, verbosity=-1)
+    model = lgb.LGBMRegressor(objective=OBJECTIVE,
+                               n_estimators=300, learning_rate=0.05, max_depth=6,
+                               num_leaves=31, random_state=TRAIN_SEED, n_jobs=4, verbosity=-1)
+    print(f"LightGBM objective: {OBJECTIVE}", file=sys.stderr)
     print("fitting LightGBM...", file=sys.stderr)
     model.fit(train_df[feature_cols], train_df["y"])
     model.booster_.save_model(f"{OUTPUT_DIR}/lgbm_model.txt")
